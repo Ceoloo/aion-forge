@@ -1,0 +1,15 @@
+{
+  "name": "@aion/forge",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check src/*.mjs && node --check src/engines/*.mjs && node --check test/*.test.mjs && npm test",
+    "status": "node src/cli.mjs status"
+  }
+}
