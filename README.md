@@ -1,40 +1,30 @@
 # AION Forge
 
-**AION-owned governed development workspace — v0.1 foundation only (not production ready).**
+AION-owned governed development workspace. **v0.2 trust-boundary code is review-only; not production-ready.**
 
-Forge is a product surface for AION Software Factory. It proposes coding-agent sessions through **existing AION Runtime**. Forge never directly opens terminals, changes repositories or bypasses human approval.
+## Present
 
-## Delivered
+- v0.1: request schema, Actor/tenant/R3 policy preflight, existing Runtime command transport, disabled Herdr-core interface.
+- v0.2: Sentinel verification adapter and same-request credential binding; strictly allowlisted audit event adapter requiring a committed persistence acknowledgment.
+- Node 22 security-negative tests, CI, zero installed Herdr binaries.
 
-- Strict request validation: no shell, raw paths, arbitrary templates or caller-supplied actor IDs.
-- Server-side verified principal and durable canonical Actor are required integration ports.
-- Tenant, invoke role, explicit capability, revoked agent and R3 risk preflight.
-- Durable audit port must write before Runtime requests.
-- Runtime HTTP adapter targets existing POST /v1/commands with server-supplied credential.
-- Replaceable Herdr-core EnginePort is disabled.
-- Zero npm dependencies; Node 22 tests, CI and read-only status CLI.
-
-**Not yet built:** deployed Sentinel verifier, real AION Data audit adapter, registered Forge Runtime service/worker, sandboxed Herdr-core, session UI, staging interoperability and production execution. The proposed capability forge.session.launch is NOT registered by this change.
-
-## Verify locally
+## Verify
 
     npm run check
     npm run status
 
-Status intentionally reports engineEnabled=false, runtimeConnected=false, sentinelConnected=false and productionReady=false.
+The status command intentionally reports identityWiredToLiveSentinel=false, auditWiredToLiveData=false, engineEnabled=false, runtimeConnected=false and productionReady=false.
 
 ## Boundary
 
-    Sentinel verified server identity (planned)
-      -> Forge validation and durable audit
-      -> existing AION Runtime Execution Gateway
-      -> AION Core R3 policy / human approval
-      -> AION Data run, execution and evidence
-      -> future Runtime-owned isolated worker
-      -> future private Herdr-core engine
+    trusted Sentinel verifier -> durable Principal/Actor binding
+      -> Forge preflight -> trusted AION Data audit
+      -> existing AION Runtime POST /v1/commands
+      -> AION Core R3 policy/human approval
+      -> future isolated worker -> Herdr-core (DISABLED)
 
-Only a future Runtime-owned isolated worker may invoke Herdr-core after an approved capability and human decision. Herdr-core itself is not a sandbox or permission system.
+Forge product must not directly query Data or expose a Herdr terminal socket. A trusted Runtime-side adapter will be required before deployment. The proposed forge.session.launch catalog capability is NOT registered.
 
-See docs/architecture.md, docs/security-gates.md, docs/repository-audit.md and docs/herdr-core.md.
+Read docs/v0.2-trust-boundary.md, docs/security-gates.md, docs/architecture.md, and docs/repository-audit.md.
 
-This scaffold includes no Herdr code or binary. Herdr-core is upstream Apache-2.0; review its license and notices before any future import. AION retains ownership of original Forge code.
+Herdr-core upstream is Apache-2.0. No Herdr code or binaries are bundled here. Existing GE-001 and AIO-111 production gates are unchanged.

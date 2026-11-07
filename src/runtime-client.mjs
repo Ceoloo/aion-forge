@@ -11,13 +11,17 @@ function checkRuntimeEndpoint(value) {
   return url.origin;
 }
 
-export function createRuntimeClient({baseUrl, tokenProvider, fetchImpl = fetch}) {
+/** Gateway transport; production composition MUST set requireBoundCredential. */
+export function createRuntimeClient({baseUrl, tokenProvider, fetchImpl = fetch,
+  requireBoundCredential = false} = {}) {
   const origin = checkRuntimeEndpoint(baseUrl);
-  if (typeof tokenProvider !== 'function' || typeof fetchImpl !== 'function')
-    deny('configuration_error', 'Runtime tokenProvider and fetchImpl are required');
+  if (typeof fetchImpl !== 'function' || (typeof tokenProvider !== 'function' && !requireBoundCredential))
+    deny('configuration_error', 'Runtime tokenProvider or required bound credential is missing');
   return Object.freeze({
-    async submitCommand(command) {
-      const token = await tokenProvider();
+    async submitCommand(command, {runtimeBearer} = {}) {
+      if (requireBoundCredential && typeof runtimeBearer !== 'string')
+        deny('auth_required', 'same-request verified Sentinel credential required');
+      const token = typeof runtimeBearer === 'string' ? runtimeBearer : await tokenProvider();
       if (typeof token !== 'string' || token.length < 8 || /[\r\n]/.test(token))
         deny('auth_required', 'Runtime bearer credential unavailable');
       let response;
