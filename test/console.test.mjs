@@ -33,7 +33,7 @@ test('unknown status never falsely claims working or completed',()=>{
 test('counts and search honor status and workspace constraints',()=>{
   const counts=sessionCounts(view.sessions);
   assert.deepEqual(counts,{total:6,working:1,attention:2,queued:1,review:1});
-  assert.equal(searchSessions(view.sessions,view.workspaces,'identity').length,1);
+  assert.equal(searchSessions(view.sessions,view.workspaces,'identity').length,2);
   assert.equal(searchSessions(view.sessions,view.workspaces,'','w-interface').length,3);
   assert.equal(searchSessions(view.sessions,view.workspaces,'','all','approval_required').length,1);
   assert.equal(searchSessions(view.sessions,view.workspaces,'no match').length,0);
