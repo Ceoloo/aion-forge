@@ -8,6 +8,14 @@ AION-owned governed development workspace. **v0.2 trust-boundary code is review-
 - v0.2: Sentinel verification adapter and same-request credential binding; strictly allowlisted audit event adapter requiring a committed persistence acknowledgment.
 - Node 22 security-negative tests, CI, zero installed Herdr binaries.
 
+## Control Room preview (Cloudroom/Herdr-inspired, independently implemented)
+
+The responsive [Control Room](apps/console/index.html) provides a workspace navigator, session status/attention lists, approval inbox, event inspector, changes/preview placeholders and Cmd/Ctrl+K palette. It uses **synthetic tenant-scoped fixtures** with all execution/approval/terminal/transfer controls disabled; it does not claim a live Runtime or Sentinel connection.
+
+    npm run console
+
+Open http://127.0.0.1:4173 on your development machine. Read [the source-grounded comparison and frontend plan](docs/cloudroom-ux-study.md).
+
 ## Verify
 
     npm run check
