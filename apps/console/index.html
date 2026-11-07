@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <meta name="description" content="AION Forge Control Room design preview. Not connected to Runtime.">
+  <title>AION Forge — Control Room (Design Preview)</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to workspace</a>
+  <div class="app-frame">
+    <header class="topbar">
+      <div class="brand-group">
+        <button class="icon-button mobile-menu" id="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <div class="mark" aria-hidden="true"><span>F</span></div>
+        <div class="brand-words"><strong>AION <em>FORGE</em></strong><small>DEVELOPER SYSTEMS</small></div>
+      </div>
+      <div class="crumbs"><span class="crumb-dot"></span><span>Software Factory</span><span class="slash">/</span><strong id="crumb-current">Overview</strong></div>
+      <div class="top-actions">
+        <span class="mode-chip"><span class="mode-dot"></span>Design preview</span>
+        <button type="button" class="command-trigger" id="command-trigger" aria-haspopup="dialog" aria-controls="command-palette"><span class="command-icon" aria-hidden="true">⌕</span> Search or jump to… <kbd>⌘ K</kbd></button>
+        <button type="button" class="start-btn" disabled title="Session creation requires reviewed Runtime authorization">＋ New session <span class="tiny-lock">◇</span></button>
+        <span class="avatar" aria-label="No signed-in user; sample identity only">DEMO</span>
+      </div>
+    </header>
+    <div class="app-body">
+      <aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+        <div class="sidebar-header">WORKSPACE</div>
+        <nav id="main-nav" class="nav-stack" aria-label="Control Room sections"></nav>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-heading"><span>PROJECTS</span><span class="sidebar-count" id="workspace-count">0</span></div>
+        <div id="workspace-nav" class="workspace-nav"></div>
+        <div class="sidebar-bottom">
+          <div class="sidebar-help"><span class="icon-square" aria-hidden="true">?</span><div><strong>Governance first</strong><small>Execution gated by Runtime</small></div></div>
+          <div class="sidebar-stamp"><span class="shield-outline" aria-hidden="true">◇</span> Sentinel <span class="status-disconnected">NOT CONNECTED</span></div>
+        </div>
+      </aside>
+      <main id="main" class="main" tabindex="-1">
+        <div class="content-inner">
+          <div class="page-heading">
+            <div><span class="eyebrow">AION / ENGINEERING / CONTROL ROOM</span>
+              <h1 id="page-title">Software Factory</h1>
+              <p id="page-subtitle">One workspace to monitor coding agents, reviews and execution gates.</p>
+            </div>
+            <div class="heading-tools"><span class="privacy-chip">◎ Example data</span><button class="outline-btn" type="button" id="review-gates">View security gates <span aria-hidden="true">↗</span></button></div>
+          </div>
+          <div class="banner" role="status"><span class="banner-icon" aria-hidden="true">!</span><div><strong>This is an interactive design preview, not a connected control plane.</strong><span>Session records are synthetic. Identity, Runtime, Herdr and cloud workers remain disconnected. Every execution control is disabled.</span></div></div>
+          <div id="page-content"></div>
+        </div>
+      </main>
+      <aside class="inspector" id="inspector" aria-label="Session inspector">
+        <div class="inspector-head"><span>INSPECTOR</span><button type="button" class="icon-button inspector-close" id="inspector-close" aria-label="Close inspector">×</button><span class="inspector-type">READ ONLY</span></div>
+        <div id="inspector-content" class="inspector-content"></div>
+      </aside>
+    </div>
+    <footer class="bottom-bar"><span><span class="bottom-lamp"></span> Forge UI preview</span><span>NO NETWORK · NO EXECUTION · NO CREDENTIALS</span><span>v0.3 / design system</span></footer>
+  </div>
+  <div class="palette-backdrop" id="command-palette" role="presentation" hidden>
+    <div class="palette-dialog" role="dialog" aria-modal="true" aria-labelledby="palette-title">
+      <div class="palette-title" id="palette-title">Jump to a view or session <span>ESC to close</span></div>
+      <input id="palette-input" type="search" autocomplete="off" placeholder="Search Forge… " aria-label="Search workspaces and sessions">
+      <div id="palette-results" class="palette-results"></div>
+    </div>
+  </div>
+  <div id="announcement" class="sr-only" aria-live="polite"></div>
+</body>
+</html>

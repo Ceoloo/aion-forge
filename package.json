@@ -1,6 +1,6 @@
 {
   "name": "@aion/forge",
-  "version": "0.2.0",
+  "version": "0.3.0-dev",
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "check": "node --check src/*.mjs && node --check src/engines/*.mjs && node --check test/*.test.mjs && npm test",
-    "status": "node src/cli.mjs status"
+    "check": "node --check src/*.mjs && node --check src/engines/*.mjs && node --check apps/console/*.mjs && node --check scripts/*.mjs && node --check test/*.test.mjs && npm test",
+    "status": "node src/cli.mjs status",
+    "console": "node scripts/serve-console.mjs"
   }
 }
