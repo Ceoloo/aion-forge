@@ -5,10 +5,8 @@ import { deny } from './errors.mjs';
 const RESULT_STATUSES = new Set(['awaiting_approval', 'denied', 'failed', 'completed']);
 
 /**
- * Product-level coordinator only. All actual execution stays in AION Runtime.
- * identity.requirePrincipal is a TRUSTED server-side Sentinel/Runtime adapter.
- * actorRegistry.get resolves a durable AION Data Actor (never request input).
- * audit.append must durably write evidence and fail closed.
+ * Existing Runtime remains the only execution gateway; Sentinel verifies
+ * identity using durable Data binding and audit requires a committed write.
  */
 export function createForgeCoordinator({identity, actorRegistry, runtime, audit}) {
   for (const [name, object, method] of [
@@ -24,6 +22,7 @@ export function createForgeCoordinator({identity, actorRegistry, runtime, audit}
     async requestSession(untrustedInput) {
       const input = parseLaunchRequest(untrustedInput);
       const principal = assertVerifiedPrincipal(await identity.requirePrincipal(), input.tenantId);
+      // Actor registry MUST be a trusted Runtime-owned fresh AION Data lookup.
       const actor = assertCanonicalActor(
         await actorRegistry.get(principal.actorId, input.tenantId), principal, input.tenantId
       );
@@ -42,7 +41,7 @@ export function createForgeCoordinator({identity, actorRegistry, runtime, audit}
           payload: {workspaceId: input.workspaceId, template: input.template},
           metadata: {forgeRequestId: requestId, source: 'aion-forge'},
           environment: 'staging'
-        });
+        }, {runtimeBearer: principal.runtimeBearer});
       } catch {
         await audit.append({type: 'forge.session.runtime_error', ...auditFields});
         deny('runtime_unavailable', 'Runtime did not accept this request; no engine was invoked');
